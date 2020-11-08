@@ -1,5 +1,6 @@
 package com.bodegapp.demo.controller;
 
+import com.bodegapp.demo.model.CartLine;
 import com.bodegapp.demo.model.Order;
 import com.bodegapp.demo.resource.OrderResource;
 import com.bodegapp.demo.resource.SaveOrderResource;
@@ -55,6 +56,11 @@ public class OrderController {
     @DeleteMapping("/customers/{customerId}/orders/{orderId}")
     public ResponseEntity<?> deleteOrder(@PathVariable(name = "customerId") Long customerId, @PathVariable(name = "orderId") Long orderId) {
         return orderService.deleteOrder(customerId, orderId);
+    }
+
+    @PostMapping("/orders/{orderId}/products")
+    public OrderResource AssignProductsByOrderId(@PathVariable(name = "orderId") Long orderId, @Valid @RequestBody List<CartLine> cartLines){
+        return convertToResource(orderService.AssignProductsByOrderId(orderId, cartLines));
     }
 
     private Order convertToEntity(SaveOrderResource resource) { return mapper.map(resource, Order.class); }

@@ -1,5 +1,6 @@
 package com.bodegapp.demo.service;
 
+import com.bodegapp.demo.model.CartLine;
 import com.bodegapp.demo.model.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,5 +14,6 @@ public interface OrderService {
     Order createOrder(Long customerId,Order order);
     Order getOrderByIdAndCustomerId(Long customerId, Long orderId);
     Page<Order> getAllOrdersByCustomerId(Long customerId, Pageable pageable);
+    Order AssignProductsByOrderId(Long orderId, List<CartLine> products);
     List<Order> getAllOrders();
 }

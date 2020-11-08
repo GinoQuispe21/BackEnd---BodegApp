@@ -1,15 +1,21 @@
 package com.bodegapp.demo.service;
 
 import com.bodegapp.demo.exception.ResourceNotFoundException;
+import com.bodegapp.demo.model.CartLine;
 import com.bodegapp.demo.model.Order;
+import com.bodegapp.demo.model.OrderDetail;
+import com.bodegapp.demo.model.Product;
 import com.bodegapp.demo.repository.CustomerRepository;
+import com.bodegapp.demo.repository.OrderDetailRepository;
 import com.bodegapp.demo.repository.OrderRepository;
+import com.bodegapp.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.naming.spi.ResolveResult;
 import java.util.List;
 
 @Service
@@ -20,6 +26,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
 
     @Override
     public ResponseEntity<?> deleteOrder(Long customerId, Long orderId) {
@@ -58,6 +70,24 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Page<Order> getAllOrdersByCustomerId(Long customerId, Pageable pageable) {
         return orderRepository.findByCustomerId(customerId, pageable);
+    }
+
+    @Override
+    public Order AssignProductsByOrderId(Long orderId, List<CartLine> products) {
+        Order order =  orderRepository.findById(orderId).orElseThrow(()-> new ResourceNotFoundException("order", "Id", orderId));
+        for(CartLine product : products){
+            OrderDetail orderDetail = new OrderDetail();
+            Product product1 = productRepository.findById(product.getId()).orElseThrow(() -> new ResourceNotFoundException("Product", "Id",product.getId()));
+            orderDetail.setProduct(product1);
+            orderDetail.setOrder(order);
+            orderDetail.setQuantity(product.getQuantity());
+
+            product1.getOrderDetails().add(orderDetail);
+            order.getOrderDetails().add(orderDetail);
+
+            orderDetailRepository.save(orderDetail);
+        }
+        return order;
     }
 
     @Override

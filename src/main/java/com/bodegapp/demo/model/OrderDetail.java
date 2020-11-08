@@ -19,10 +19,6 @@ public class OrderDetail {
     @NotNull
     private int quantity;
 
-    @NotBlank
-    @NotNull
-    private double amount;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
     @JsonIgnore
