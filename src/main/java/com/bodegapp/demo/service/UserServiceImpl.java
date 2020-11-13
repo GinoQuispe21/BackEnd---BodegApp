@@ -51,4 +51,16 @@ public class UserServiceImpl implements UserService{
     public Page<User> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
+
+    @Override
+    public User login(User userRequest) {
+        User myUser = userRepository.findByUsername(userRequest.getUsername());
+        if(myUser == null){
+            return userRequest;
+        }
+            if(userRequest.getPassword().equals(myUser.getPassword())){
+            return myUser;
+        }
+        return userRequest;
+    }
 }

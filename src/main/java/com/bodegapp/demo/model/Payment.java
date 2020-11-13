@@ -25,9 +25,9 @@ public class Payment {
     private double payment;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_account_id", nullable = false)
     @JsonIgnore
-    private Customer customer;
+    private CustomerAccount customerAccount;
 
     //Relacion de uno a uno entre order y movement
     @OneToOne(mappedBy = "payment")

@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface PaymentService {
-    ResponseEntity<?> deletePayment(Long customerId, Long paymentId);
-    Payment updatePayment(Long customerId, Long paymentId, Payment paymentDetails);
-    Payment createPayment(Long customerId, Payment payment);
-    Payment getPaymentByIdAndCustomerId(Long customerId, Long paymentId);
-    Page<Payment> getAllPaymentsByCustomerId(Long customerId, Pageable pageable);
+    ResponseEntity<?> deletePayment(Long customerAccountId, Long paymentId);
+    Payment updatePayment(Long customerAccountId, Long paymentId, Payment paymentDetails);
+    Payment createPayment(Long customerAccountId, Payment payment);
+    Payment getPaymentByIdAndCustomerId(Long customerAccountId, Long paymentId);
+    Page<Payment> getAllPaymentsByCustomerAccountId(Long customerAccountId, Pageable pageable);
     List<Payment> getAllPayments();
 }

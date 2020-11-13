@@ -57,6 +57,12 @@ public class UserController {
         return userService.deleteUser(userId);
     }
 
+    @PostMapping("/login")
+    public UserResource login(@Valid @RequestBody SaveUserResource resource)  {
+        User user = convertToEntity(resource);
+        return convertToResource(userService.login(user));
+    }
+
     private User convertToEntity(SaveUserResource resource) { return mapper.map(resource, User.class); }
 
     private UserResource convertToResource(User entity) { return mapper.map(entity, UserResource.class); }

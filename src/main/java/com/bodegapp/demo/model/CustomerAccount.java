@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class CustomerAccount {
     @NotNull
     private double credit;
 
-    //Tasa % de interes
+    //Tasa en % del interes
     @NotBlank
     @NotNull
     private double interestRate;
@@ -36,13 +37,13 @@ public class CustomerAccount {
     private int interestRateType;
 
     //Periodo de la tasa de interes
-    //1:Mensual, 2:Bimestral, 3:Trimestral
+    //1:Mensual, 2:Bimestral, 3:Trimestral, 4:Cuatrimestral, 5:Semestral, 6:Anual
     @NotBlank
     @NotNull
     private int interestRatePeriod;
 
     //Capitalizacion
-    //0: Null 1: Diario
+    //0: Null, 1:Diaria, 2:Semanal
     @NotBlank
     @NotNull
     private int compounding;
@@ -51,6 +52,8 @@ public class CustomerAccount {
     @NotBlank
     @NotNull
     private int typeYear;
+
+    private Date firstDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")

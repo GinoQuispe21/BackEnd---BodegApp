@@ -30,30 +30,30 @@ public class PaymentController {
     @GetMapping("/payments")
     public List<Payment> getAllPayments() { return paymentService.getAllPayments(); }
 
-    @GetMapping("/customers/{customerId}/payments")
-    public Page<PaymentResource> getAllPaymentsByCustomerId(@PathVariable(name = "customerId") Long customerId, Pageable pageable) {
-        Page<Payment> paymentPage = paymentService.getAllPaymentsByCustomerId(customerId, pageable);
+    @GetMapping("/customerAccounts/{customerAccountsId}/payments")
+    public Page<PaymentResource> getAllPaymentsByCustomerId(@PathVariable(name = "customerAccountsId") Long customerId, Pageable pageable) {
+        Page<Payment> paymentPage = paymentService.getAllPaymentsByCustomerAccountId(customerId, pageable);
         List<PaymentResource> resources = paymentPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @GetMapping("/customers/{customerId}/payments/{paymentId}")
-    public PaymentResource getPaymentByIdAndCustomerId(@PathVariable(name = "customerId") Long customerId, @PathVariable(name = "paymentId") Long paymentId) {
+    @GetMapping("/customerAccounts/{customerAccountsId}/payments/{paymentId}")
+    public PaymentResource getPaymentByIdAndCustomerId(@PathVariable(name = "customerAccountsId") Long customerId, @PathVariable(name = "paymentId") Long paymentId) {
         return convertToResource(paymentService.getPaymentByIdAndCustomerId(customerId, paymentId));
     }
 
-    @PostMapping("/customers/{customerId}/payments")
-    public PaymentResource createPayment(@PathVariable(name = "customerId") Long customerId, @Valid @RequestBody SavePaymentResource resource) {
+    @PostMapping("/customerAccounts/{customerAccountsId}/payments")
+    public PaymentResource createPayment(@PathVariable(name = "customerAccountsId") Long customerId, @Valid @RequestBody SavePaymentResource resource) {
         return convertToResource(paymentService.createPayment(customerId, convertToEntity(resource)));
     }
 
-    @PutMapping("/customers/{customerId}/payments/{paymentId}")
-    public PaymentResource updatePayment(@PathVariable(name = "customerId") Long customerId, @PathVariable(name = "paymentId") Long paymentId, @Valid @RequestBody SavePaymentResource resource) {
+    @PutMapping("/customerAccounts/{customerAccountsId}/payments/{paymentId}")
+    public PaymentResource updatePayment(@PathVariable(name = "customerAccountsId") Long customerId, @PathVariable(name = "paymentId") Long paymentId, @Valid @RequestBody SavePaymentResource resource) {
         return convertToResource(paymentService.updatePayment(customerId, paymentId, convertToEntity(resource)));
     }
 
-    @DeleteMapping("/customers/{customerId}/payments/{paymentId}")
-    public ResponseEntity<?> deletePayment(@PathVariable(name = "customerId") Long customerId, @PathVariable(name = "paymentId") Long paymentId) {
+    @DeleteMapping("/customerAccounts/{customerAccountsId}/payments/{paymentId}")
+    public ResponseEntity<?> deletePayment(@PathVariable(name = "customerAccountsId") Long customerId, @PathVariable(name = "paymentId") Long paymentId) {
         return paymentService.deletePayment(customerId, paymentId);
     }
 

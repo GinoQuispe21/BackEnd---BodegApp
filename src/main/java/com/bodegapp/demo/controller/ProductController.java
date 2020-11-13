@@ -1,5 +1,6 @@
 package com.bodegapp.demo.controller;
 
+import com.bodegapp.demo.model.CartLine;
 import com.bodegapp.demo.model.Product;
 import com.bodegapp.demo.resource.ProductResource;
 import com.bodegapp.demo.resource.SaveProductResource;
@@ -55,6 +56,11 @@ public class ProductController {
     @DeleteMapping("/products/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable(name = "id") Long productId) {
         return productService.deleteProduct(productId);
+    }
+
+    @GetMapping("/orders/{orderId}/products")
+    public List<CartLine> getAllArticlesByOrderId(@PathVariable(name = "orderId") Long orderId) {
+        return productService.getAllProductsByOrderId(orderId);
     }
 
     private Product convertToEntity(SaveProductResource resource) { return mapper.map(resource, Product.class); }
