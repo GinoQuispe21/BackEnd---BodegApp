@@ -15,4 +15,5 @@ public class CustomerAccountResource {
     private int compounding;
     private int typeYear;
     private Date firstDate;
+    private double testDate;
 }

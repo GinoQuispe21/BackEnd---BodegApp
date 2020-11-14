@@ -1,7 +1,6 @@
 package com.bodegapp.demo.service;
 
 import com.bodegapp.demo.exception.ResourceNotFoundException;
-import com.bodegapp.demo.model.CustomerAccount;
 import com.bodegapp.demo.model.Payment;
 import com.bodegapp.demo.repository.CustomerAccountRepository;
 import com.bodegapp.demo.repository.PaymentRepository;
@@ -82,22 +81,29 @@ public class PaymentServiceImpl implements PaymentService{
                 LocalDate d1 = LocalDate.parse(fd, DateTimeFormatter.ISO_LOCAL_DATE);
                 LocalDate d2 = LocalDate.parse(ld, DateTimeFormatter.ISO_LOCAL_DATE);
                 Duration diff = Duration.between(d1.atStartOfDay(), d2.atStartOfDay());
-                long dif = diff.toDays();
+                double dif = diff.toDays();
 
-                switch (customerAccount.getInterestRatePeriod()) {
-                    case 1:
-                        cantPeri = 30;
-                    case 2:
-                        cantPeri = 60;
-                    case  3:
-                        cantPeri = 90;
-                    case 4:
-                        cantPeri = 120;
-                    case 5:
-                        cantPeri = 180;
-                    case 6:
-                        cantPeri = 360;
+                customerAccount.setTestDate(dif);
+
+                if(customerAccount.getInterestRatePeriod() == 1){
+                    cantPeri = 30;
                 }
+                if(customerAccount.getInterestRatePeriod() == 2){
+                    cantPeri = 60;
+                }
+                if(customerAccount.getInterestRatePeriod() == 3){
+                    cantPeri = 90;
+                }
+                if(customerAccount.getInterestRatePeriod() == 4){
+                    cantPeri = 120;
+                }
+                if(customerAccount.getInterestRatePeriod() == 5){
+                    cantPeri = 180;
+                }
+                if(customerAccount.getInterestRatePeriod() == 6){
+                    cantPeri = 360;
+                }
+
 
                 if (customerAccount.getInterestRateType() == 1) {
                     //Interes Simple

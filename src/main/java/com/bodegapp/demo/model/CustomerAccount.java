@@ -55,6 +55,8 @@ public class CustomerAccount {
 
     private Date firstDate;
 
+    private double testDate;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
