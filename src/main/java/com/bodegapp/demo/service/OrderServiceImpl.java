@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.time.*;
-import java.util.*;
 
 import java.util.Date;
 import java.util.List;
@@ -66,6 +65,8 @@ public class OrderServiceImpl implements OrderService{
             double valorFuturo;
             double interes;
             double cantPeri = 0;
+            double capitalizacion =  0;
+            double gain = customerAccount.getGain();
 
             double amount = order.getPayment();
 
@@ -118,31 +119,58 @@ public class OrderServiceImpl implements OrderService{
                     cantPeri = 360;
                 }
 
+                if(customerAccount.getCompounding() == 1){
+                    capitalizacion = 1;
+                }
+                if(customerAccount.getCompounding() == 2){
+                    capitalizacion = 7;
+                }
+                if(customerAccount.getCompounding() == 3){
+                    capitalizacion = 30;
+                }
+                if(customerAccount.getCompounding() == 4){
+                    capitalizacion = 60;
+                }
+                if(customerAccount.getCompounding() == 5){
+                    capitalizacion = 90;
+                }
+                if(customerAccount.getCompounding() == 6){
+                    capitalizacion = 120;
+                }
+                if(customerAccount.getCompounding() == 7){
+                    capitalizacion = 180;
+                }
+
                 if (amount + customerAccount.getCurrentBalance() <= customerAccount.getCredit()) {
                     if (customerAccount.getInterestRateType() == 1) {
-
                         //Interes Simple
                         interes = capital * customerAccount.getInterestRate() * (year / cantPeri) * (dif) / year;
                         valorFuturo = capital + interes + amount;
                         customerAccount.setCurrentBalance(valorFuturo);
                         customerAccount.setFirstDate(order.getGenerated_date());
+                        customerAccount.setGain(gain + interes);
+                        customerAccount.setAvailableBalance(customerAccount.getCredit() - customerAccount.getCurrentBalance());
                     }
                     if (customerAccount.getInterestRateType() == 2) {
 
                         //Interes Nominal
-                        //60 = m Capitalizacion, caso ejemplo Bimestral
-                        interes = capital * (Math.pow((1 + (customerAccount.getInterestRate() / 60)), (dif)) - 1);
+                        //m = year/cantPeri   n = dif/capitalizacion
+                        interes = capital * (Math.pow((1 + (customerAccount.getInterestRate() / (cantPeri/capitalizacion))), (dif/capitalizacion)) - 1);
                         valorFuturo = capital + interes + amount;
                         customerAccount.setCurrentBalance(valorFuturo);
                         customerAccount.setFirstDate(order.getGenerated_date());
+                        customerAccount.setGain(gain + interes);
+                        customerAccount.setAvailableBalance(customerAccount.getCredit() - customerAccount.getCurrentBalance());
                     }
                     if (customerAccount.getInterestRateType() == 3) {
 
                         //Interes Efectivo
-                        interes = capital * (Math.pow(1 + customerAccount.getInterestRate(), (dif) / (year / cantPeri)) - 1);
+                        interes = capital * ((Math.pow(1 + customerAccount.getInterestRate(), (dif/cantPeri)))-1);
                         valorFuturo = capital + interes + amount;
                         customerAccount.setCurrentBalance(valorFuturo);
                         customerAccount.setFirstDate(order.getGenerated_date());
+                        customerAccount.setGain(gain + interes);
+                        customerAccount.setAvailableBalance(customerAccount.getCredit() - customerAccount.getCurrentBalance());
                     }
                 } else {
                     return null;
@@ -173,7 +201,6 @@ public class OrderServiceImpl implements OrderService{
         customerAccountRepository.save(customerAccount);
 
         return order;*/
-
     }
 
     @Override

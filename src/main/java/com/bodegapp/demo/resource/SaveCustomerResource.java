@@ -47,4 +47,6 @@ public class SaveCustomerResource {
     @NotNull
     @Size(max = 50)
     private String email;
+
+    private int state;
 }

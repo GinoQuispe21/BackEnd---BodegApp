@@ -12,4 +12,5 @@ public class CustomerResource {
     private String district;
     private String country;
     private String email;
+    private int state;
 }

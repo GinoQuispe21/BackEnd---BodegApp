@@ -11,4 +11,5 @@ public interface CustomerService {
     Customer createCustomer(Long userId, Customer customer);
     Customer getCustomerByIdAndUserId(Long userId, Long customerId);
     Page<Customer> getAllCustomersByUserId(Long userId, Pageable pageable);
+    Page<Customer> getAllCustomersActiveByUserId(Long userId, Pageable pageable);
 }

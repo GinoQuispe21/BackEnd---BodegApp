@@ -52,6 +52,10 @@ public class Customer {
     @Size(max = 50)
     private String email;
 
+    //Estado del customer: 0: CLiente Activo 1: Cliente Eliminado
+
+    private int state;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore

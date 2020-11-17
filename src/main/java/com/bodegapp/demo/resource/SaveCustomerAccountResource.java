@@ -37,5 +37,8 @@ public class SaveCustomerAccountResource {
     private int typeYear;
 
     private Date firstDate;
-    private double testDate;
+
+    private double gain;
+
+    private double availableBalance;
 }

@@ -43,7 +43,7 @@ public class CustomerAccount {
     private int interestRatePeriod;
 
     //Capitalizacion
-    //0: Null, 1:Diaria, 2:Semanal
+    //0: Null, 1:Diaria, 2:Semanal, 3:Mensual, 4:Bimestral, 5:Trimestral, 6:Cuatrimestral, 7:Semestral
     @NotBlank
     @NotNull
     private int compounding;
@@ -53,9 +53,14 @@ public class CustomerAccount {
     @NotNull
     private int typeYear;
 
+    //Fecha para almacenar la fecha de la ultima transaccion.
     private Date firstDate;
 
-    private double testDate;
+    //Ganancia que le genera al bodeguero
+    private double gain;
+
+    //Saldo disponible
+    private double availableBalance;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")

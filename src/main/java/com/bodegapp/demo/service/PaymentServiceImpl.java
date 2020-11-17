@@ -56,6 +56,8 @@ public class PaymentServiceImpl implements PaymentService{
             double valorFuturo;
             double interes = 0;
             double cantPeri = 0;
+            double capitalizacion = 0;
+            double gain = customerAccount.getGain();
 
             if(customerAccount.getCurrentBalance() == 0.00){
                 return null;
@@ -83,8 +85,6 @@ public class PaymentServiceImpl implements PaymentService{
                 Duration diff = Duration.between(d1.atStartOfDay(), d2.atStartOfDay());
                 double dif = diff.toDays();
 
-                customerAccount.setTestDate(dif);
-
                 if(customerAccount.getInterestRatePeriod() == 1){
                     cantPeri = 30;
                 }
@@ -104,6 +104,27 @@ public class PaymentServiceImpl implements PaymentService{
                     cantPeri = 360;
                 }
 
+                if(customerAccount.getCompounding() == 1){
+                    capitalizacion = 1;
+                }
+                if(customerAccount.getCompounding() == 2){
+                    capitalizacion = 7;
+                }
+                if(customerAccount.getCompounding() == 3){
+                    capitalizacion = 30;
+                }
+                if(customerAccount.getCompounding() == 4){
+                    capitalizacion = 60;
+                }
+                if(customerAccount.getCompounding() == 5){
+                    capitalizacion = 90;
+                }
+                if(customerAccount.getCompounding() == 6){
+                    capitalizacion = 120;
+                }
+                if(customerAccount.getCompounding() == 7){
+                    capitalizacion = 180;
+                }
 
                 if (customerAccount.getInterestRateType() == 1) {
                     //Interes Simple
@@ -112,19 +133,21 @@ public class PaymentServiceImpl implements PaymentService{
                 if (customerAccount.getInterestRateType() == 2) {
 
                     //Interes Nominal
-                    //60 = m Capitalizacion, caso ejemplo Bimestral
-                    interes = capital * (Math.pow((1 + (customerAccount.getInterestRate() / 60)), (dif)) - 1);
+                    //m = year/cantPeri   n = dif/capitalizacion
+                    interes = capital * (Math.pow((1 + (customerAccount.getInterestRate() / (cantPeri/capitalizacion))), (dif/capitalizacion)) - 1);
                 }
-                if (customerAccount.getInterestRateType() == 3) {
+                if (customerAccount.getInterestRateType() == 3){
 
                     //Interes Efectivo
-                    interes = capital * (Math.pow(1 + customerAccount.getInterestRate(), (dif) / (year/cantPeri)) - 1);
+                    interes = capital * ((Math.pow(1 + customerAccount.getInterestRate(), (dif/cantPeri)))-1);
                 }
 
                 if(payment.getPayment() <= capital + interes){
                     valorFuturo = capital + interes - payment.getPayment();
                     customerAccount.setCurrentBalance(valorFuturo);
                     customerAccount.setFirstDate(payment.getGenerated_date());
+                    customerAccount.setGain(gain + interes);
+                    customerAccount.setAvailableBalance(customerAccount.getCredit() - customerAccount.getCurrentBalance());
                 }
                 else{
                     return null;

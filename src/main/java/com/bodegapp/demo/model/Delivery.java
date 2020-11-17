@@ -21,7 +21,4 @@ public class Delivery {
     @NotNull
     @NotBlank
     private double deliveryPrice;
-
-    @OneToOne(mappedBy = "delivery")
-    private Order order;
 }

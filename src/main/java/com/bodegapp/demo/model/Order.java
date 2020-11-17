@@ -35,10 +35,11 @@ public class Order {
     private Customer customer;
 
 
-    //Relacion de uno a uno entre order con delivery
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_id", referencedColumnName = "id")
-    private Delivery delivery;
+    //Relacion de uno a muchos entre order con delivery
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    //@JoinColumn(name = "delivery_id", nullable = false)
+    //@JsonIgnore
+    //private Delivery delivery;
 
     //Relacion de uno a uno entre order y movement
     @OneToOne(mappedBy = "order")
