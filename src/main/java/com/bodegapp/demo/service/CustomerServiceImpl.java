@@ -52,6 +52,7 @@ public class CustomerServiceImpl implements CustomerService{
             customer.setDistrict(customerDetail.getDistrict());
             customer.setCountry(customerDetail.getCountry());
             customer.setEmail(customerDetail.getEmail());
+            customer.setState(customerDetail.getState());
             return customerRepository.save(customer);
         }).orElseThrow(() -> new ResourceNotFoundException("Customer", "Id", customerId));
     }

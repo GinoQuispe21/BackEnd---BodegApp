@@ -17,8 +17,6 @@ public class CustomerAccount {
     private Long id;
 
     //Valor Futuro de la cuenta
-    @NotBlank
-    @NotNull
     private double currentBalance;
 
     //Monto del credito

@@ -8,8 +8,6 @@ import java.util.Date;
 
 @Data
 public class SaveCustomerAccountResource {
-    @NotBlank
-    @NotNull
     private double currentBalance;
 
     @NotBlank
