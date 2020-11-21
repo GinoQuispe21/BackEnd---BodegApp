@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
     Page<Customer> findByUserId(Long userId, Pageable pageable);
     Optional<Customer> findByIdAndUserId(Long id, Long userId);
+    Optional<Customer> findByDniAndUserId(int dni, Long userId);
 }

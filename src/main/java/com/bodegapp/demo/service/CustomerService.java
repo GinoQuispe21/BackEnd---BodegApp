@@ -10,6 +10,7 @@ public interface CustomerService {
     Customer updateCustomer(Long userId, Long customerId, Customer customerDetail);
     Customer createCustomer(Long userId, Customer customer);
     Customer getCustomerByIdAndUserId(Long userId, Long customerId);
+    Customer getCustomerByDniAndUserId(Long userId, int dni);
     Page<Customer> getAllCustomersByUserId(Long userId, Pageable pageable);
     Page<Customer> getAllCustomersActiveByUserId(Long userId, Pageable pageable);
 }

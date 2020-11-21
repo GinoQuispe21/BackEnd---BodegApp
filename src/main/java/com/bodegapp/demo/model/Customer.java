@@ -29,7 +29,7 @@ public class Customer {
 
     @NotBlank
     @NotNull
-    @Size(max = 50)
+    @Size(max = 50) 
     private String customerLastname;
 
     @NotBlank

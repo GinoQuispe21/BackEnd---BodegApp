@@ -45,6 +45,11 @@ public class CustomerController {
         return convertToResource(customerService.getCustomerByIdAndUserId(userId, customerId));
     }
 
+    @GetMapping("/users/{userId}/customersDni/{customerDNI}")
+    public CustomerResource getCustomerByDniAndUserId(@PathVariable(name = "userId") Long userId, @PathVariable(name = "customerDNI") int customerDni) {
+        return convertToResource(customerService.getCustomerByDniAndUserId(userId, customerDni));
+    }
+
     @PostMapping("/users/{userId}/customers")
     public CustomerResource createCustomer(@PathVariable(name = "userId") Long userId, @Valid @RequestBody SaveCustomerResource resource) {
         return convertToResource(customerService.createCustomer(userId, convertToEntity(resource)));

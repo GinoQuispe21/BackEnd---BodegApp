@@ -75,6 +75,15 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
+    public Customer getCustomerByDniAndUserId(Long userId, int dni) {
+        return customerRepository.findByDniAndUserId(dni, userId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Customer not found with DNI" + dni +
+                                "and UserId " + userId
+                ));
+    }
+
+    @Override
     public Page<Customer> getAllCustomersByUserId(Long userId, Pageable pageable){
         return customerRepository.findByUserId(userId, pageable);
     }
