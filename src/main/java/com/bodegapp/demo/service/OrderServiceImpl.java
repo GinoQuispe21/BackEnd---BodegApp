@@ -70,6 +70,7 @@ public class OrderServiceImpl implements OrderService{
 
             double amount = order.getPayment();
 
+            //Se cumple cuando el valor futruo es igual a 0, se entiendo como primero movimiento
             if(customerAccount.getCurrentBalance() == 0.00){
                 customerAccount.setCurrentBalance(amount);
                 customerAccount.setFirstDate(order.getGenerated_date());
@@ -142,6 +143,7 @@ public class OrderServiceImpl implements OrderService{
                     capitalizacion = 180;
                 }
 
+                //Si el momnto de la compra + valor futuro(deuda) es menor o igual al credito que tengo puedo realizar dicha orden
                 if (amount + customerAccount.getCurrentBalance() <= customerAccount.getCredit()) {
                     if (customerAccount.getInterestRateType() == 1) {
                         //Interes Simple

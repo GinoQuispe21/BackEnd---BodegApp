@@ -52,6 +52,7 @@ public class CustomerController {
 
     @PostMapping("/users/{userId}/customers")
     public CustomerResource createCustomer(@PathVariable(name = "userId") Long userId, @Valid @RequestBody SaveCustomerResource resource) {
+
         return convertToResource(customerService.createCustomer(userId, convertToEntity(resource)));
     }
 

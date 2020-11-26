@@ -12,14 +12,14 @@ import javax.validation.constraints.Size;
 @Data
 public class Customer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @NotBlank
     @NotNull
     @Column(unique = true)
     private int dni;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank
     @NotNull

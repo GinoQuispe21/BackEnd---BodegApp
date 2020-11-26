@@ -2,6 +2,7 @@ package com.bodegapp.demo.service;
 
 import com.bodegapp.demo.exception.ResourceNotFoundException;
 import com.bodegapp.demo.model.Customer;
+import com.bodegapp.demo.model.User;
 import com.bodegapp.demo.repository.CustomerAccountRepository;
 import com.bodegapp.demo.repository.CustomerRepository;
 import com.bodegapp.demo.repository.OrderRepository;
@@ -76,11 +77,19 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Customer getCustomerByDniAndUserId(Long userId, int dni) {
-        return customerRepository.findByDniAndUserId(dni, userId)
+        /*return customerRepository.findByDniAndUserId(dni, userId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Customer not found with DNI" + dni +
                                 "and UserId " + userId
-                ));
+                ));*/
+        Customer mycustomer = customerRepository.findByDniAndUserId(dni, userId);
+        if(mycustomer == null){
+            Customer customer = new Customer();
+            return customer;
+        }
+        else{
+            return mycustomer;
+        }
     }
 
     @Override
@@ -100,4 +109,6 @@ public class CustomerServiceImpl implements CustomerService{
         Page<Customer> customersActives = new PageImpl<>(listCustomers, pageable, listCustomers.size());
         return customersActives;
     }
+
+
 }
