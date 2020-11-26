@@ -73,6 +73,7 @@ public class OrderServiceImpl implements OrderService{
             if(customerAccount.getCurrentBalance() == 0.00){
                 customerAccount.setCurrentBalance(amount);
                 customerAccount.setFirstDate(order.getGenerated_date());
+                customerAccount.setAvailableBalance(customerAccount.getCredit() - customerAccount.getCurrentBalance());
                 //Asignar la fecha de la compra como la nueva fecha inicial para el siguiente periodo
             }
             else {
