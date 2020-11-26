@@ -23,7 +23,6 @@ public class Customer {
 
     @NotBlank
     @NotNull
-    @Column(unique = true)
     @Size(max = 50)
     private String customerName;
 
@@ -34,7 +33,7 @@ public class Customer {
 
     @NotBlank
     @NotNull
-    @Size(max = 50)
+    @Size(max = 100)
     private String address;
 
     @NotBlank
