@@ -158,7 +158,7 @@ public class OrderServiceImpl implements OrderService{
 
                         //Interes Nominal
                         //m = year/cantPeri   n = dif/capitalizacion
-                        interes = capital * (Math.pow((1 + (customerAccount.getInterestRate() / (cantPeri/capitalizacion))), (dif/capitalizacion)) - 1);
+                        interes = capital * (Math.pow((1     + (customerAccount.getInterestRate() / (cantPeri/capitalizacion))), (dif/capitalizacion)) - 1);
                         valorFuturo = capital + interes + amount;
                         customerAccount.setCurrentBalance(valorFuturo);
                         customerAccount.setFirstDate(order.getGenerated_date());
